@@ -51,7 +51,11 @@ function ToastPlayground() {
       </header>
 
       {/* Toast */}
-      {showToast && <Toast />}
+      {showToast && (
+        <Toast setShowToast={setShowToast} variant={radio}>
+          {textarea}
+        </Toast>
+      )}
 
       <div className={styles.controlsWrapper}>
         <div className={styles.row}>
