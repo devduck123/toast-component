@@ -3,15 +3,15 @@ import React from "react";
 import Button from "../Button";
 import ToastShelf from "../ToastShelf/ToastShelf";
 
+import { ToastContext } from "../ToastProvider/ToastProvider";
+
 import styles from "./ToastPlayground.module.css";
 
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
-const DEFAULT_VARIANT = "notice";
 
 function ToastPlayground() {
-  const [radio, setRadio] = React.useState(DEFAULT_VARIANT);
-  const [textarea, setTextarea] = React.useState("");
-  const [toastArray, setToastArray] = React.useState([]);
+  const { radio, textarea, toastArray, changeRadio, changeTextarea, addToast } =
+    React.useContext(ToastContext);
 
   const radioElements = VARIANT_OPTIONS.map((option) => (
     <div
@@ -31,33 +31,6 @@ function ToastPlayground() {
       </label>
     </div>
   ));
-
-  function changeTextarea(event) {
-    setTextarea(() => event.target.value);
-  }
-
-  function changeRadio(event) {
-    setRadio(() => event.target.value);
-  }
-
-  function addToast(event) {
-    event.preventDefault();
-
-    setToastArray((prevToastArray) => {
-      const toast = {
-        key: crypto.randomUUID(),
-        variant: radio,
-        content: textarea,
-      };
-      const newToastArray = [...prevToastArray, toast];
-
-      return newToastArray;
-    });
-
-    // clear form data
-    setTextarea(() => "");
-    setRadio(() => DEFAULT_VARIANT);
-  }
 
   return (
     <div className={styles.wrapper}>
