@@ -1,19 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import Toast from '../Toast';
-import styles from './ToastShelf.module.css';
+import Toast from "../Toast";
+import styles from "./ToastShelf.module.css";
 
-function ToastShelf() {
-  return (
-    <ol className={styles.wrapper}>
-      <li className={styles.toastWrapper}>
-        <Toast variant="notice">Example notice toast</Toast>
-      </li>
-      <li className={styles.toastWrapper}>
-        <Toast variant="error">Example error toast</Toast>
-      </li>
-    </ol>
-  );
+// expecting [{key, variant, content, setShowToast}]
+function ToastShelf({ children }) {
+  const toastElements = children.map((child) => (
+    <li className={styles.toastWrapper} key={child.key}>
+      <Toast variant={child.variant}>{child.content}</Toast>
+    </li>
+  ));
+
+  return <ol className={styles.wrapper}>{toastElements}</ol>;
 }
 
 export default ToastShelf;

@@ -18,7 +18,13 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast({ setShowToast, variant, children }) {
+function Toast({ variant, children }) {
+  const [showToast, setShowToast] = React.useState(true);
+
+  if (!showToast) {
+    return;
+  }
+
   const IconVariant = variant ? ICONS_BY_VARIANT[variant] : Info;
 
   function hideToast() {
