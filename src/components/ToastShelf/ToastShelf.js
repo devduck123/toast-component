@@ -22,7 +22,16 @@ function ToastShelf({ children }) {
     </li>
   ));
 
-  return <ol className={styles.wrapper}>{toastElements}</ol>;
+  return (
+    <ol
+      className={styles.wrapper}
+      role="region"
+      aria-live="polite"
+      aria-label="Notification"
+    >
+      {toastElements}
+    </ol>
+  );
 }
 
 export default ToastShelf;
