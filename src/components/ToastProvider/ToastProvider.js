@@ -36,6 +36,12 @@ function ToastProvider({ children }) {
     setRadio(() => DEFAULT_VARIANT);
   }
 
+  function clearToastsWithEsc(event) {
+    if (event.code === "Escape") {
+      setToastArray(() => []);
+    }
+  }
+
   const value = {
     radio,
     textarea,
@@ -43,6 +49,7 @@ function ToastProvider({ children }) {
     changeRadio,
     changeTextarea,
     addToast,
+    clearToastsWithEsc,
   };
 
   return (
