@@ -1,4 +1,5 @@
 import React from "react";
+import useEscapeKey from "../../hooks/useEscapeKey";
 
 export const ToastContext = React.createContext();
 
@@ -8,6 +9,15 @@ function ToastProvider({ children }) {
   const [radio, setRadio] = React.useState(DEFAULT_VARIANT);
   const [textarea, setTextarea] = React.useState("");
   const [toastArray, setToastArray] = React.useState([]);
+
+  // call custom hook to start effect that
+  // listens for escape key to close all toasts
+  // also use useCallback to memoize function initialization
+  const handleEscape = React.useCallback(() => {
+    setToastArray(() => []);
+  }, []);
+
+  useEscapeKey(handleEscape);
 
   function changeTextarea(event) {
     setTextarea(() => event.target.value);
@@ -36,12 +46,6 @@ function ToastProvider({ children }) {
     setRadio(() => DEFAULT_VARIANT);
   }
 
-  function clearToastsWithEsc(event) {
-    if (event.code === "Escape") {
-      setToastArray(() => []);
-    }
-  }
-
   const value = {
     radio,
     textarea,
@@ -49,7 +53,6 @@ function ToastProvider({ children }) {
     changeRadio,
     changeTextarea,
     addToast,
-    clearToastsWithEsc,
   };
 
   return (
